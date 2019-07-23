@@ -27,9 +27,10 @@ protected using the key defined in `tx_keymappings.json` for the given
 Listens on STDIN for *NaCl protected* packets. Verifies the integrity
 of the incoming *NaCl protected* packet. If it is accepted, based on
 the keys provided in `rx_keymappings.json`, it is remapped to having a
-*destination* IP address of **192.168.1.1** and the source IP address is
-derived based on its *NaCl protected* source and the rules in
-`rx_ipmappings.json`. This IPv4 packet is then sent out over STDOUT.
+*destination* IP address defined by the file `dst_ip.json` and the
+source IP address is derived based on its *NaCl protected* source and
+the rules in `rx_ipmappings.json`. This IPv4 packet is then sent out
+over STDOUT.
 
 ### debugger_passthrough.py
 
@@ -77,3 +78,23 @@ packets sourced from **192.168.1.10** destined for **192.168.1.1**.
 ```
 
 Now, anything typed into *(Terminal 3)* will appear in *(Terminal 2)*.
+
+### Pipeline_To_Docker
+
+Connects a host interface, *tun0*, with the IP
+address **192.168.4.1/24** to a running Docker container with an
+internal IP address of **192.168.1.1**. Packets sent from the host side
+to **192.168.4.16** will exit the internal Docker interface with a
+destination of **192.168.1.1** and a source of **192.168.1.2**.
+
+```bash
+cd Pipeline_To_Docker/
+./build.sh
+docker run --rm --name gitlab -it gitlab/gitlab-ce
+
+#...Get the id of the running gitlab container...
+
+./connect_host_to_container.sh <GITLAB DOCKER CONTAINER ID>
+
+#...now point your web browser to http://192.168.4.16/
+```

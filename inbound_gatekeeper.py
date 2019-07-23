@@ -10,9 +10,13 @@ import nacl.exceptions
 from scapy.all import IP, UDP, TCP
 from SocatAdapter3 import socat_format
 
-CONST_DST_IP = "192.168.1.1"
+CONST_DST_IP_FILE = "dst_ip.json"
 KEYMAPPINGS_FILE = "rx_keymappings.json"
 IPMAPPINGS_FILE = "rx_ipmappings.json"
+
+f_dst_ip = open(CONST_DST_IP_FILE, 'r')
+CONST_DST_IP = json.loads(f_dst_ip.read())
+f_dst_ip.close()
 
 #Construct nacl.secret.SecretBox(KEY) objects for all allowed contacts
 f_keymappings = open(KEYMAPPINGS_FILE, 'r')
