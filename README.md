@@ -98,3 +98,15 @@ docker run --rm --name gitlab -it gitlab/gitlab-ce
 
 #...now point your web browser to http://192.168.4.16/
 ```
+
+### connect_executable_to_pipe.sh
+
+Runs a program in a new network namespace and uses STDIN to create
+inbound IPv4 traffic and outbound IPv4 traffic is sent over STDOUT.
+
+```bash
+#This example runs an instance of the Droopy quick file sharing server
+
+mkfifo netpipe
+cat netpipe | sudo socat -d -d STDIO TUN:192.168.1.1/24,up | unshare -n -r ./connect_executable_to_pipe.sh droopy 192.168.1.48/24 > netpipe
+```
