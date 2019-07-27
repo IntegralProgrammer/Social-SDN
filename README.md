@@ -110,3 +110,51 @@ inbound IPv4 traffic and outbound IPv4 traffic is sent over STDOUT.
 mkfifo netpipe
 cat netpipe | sudo socat -d -d STDIO TUN:192.168.1.1/24,up | unshare -n -r ./connect_executable_to_pipe.sh droopy 192.168.1.48/24 > netpipe
 ```
+
+#### Connecting two VoIP devices together (unencrypted)
+
+```bash
+# (Assume this device has an IP of 10.115.210.1)
+mkfifo netpipe
+cat netpipe | nc -l -p 9500 -q 0 | unshare -n -r ./connect_executable_to_pipe.sh linphone 192.168.1.36/24 > netpipe
+```
+
+```bash
+# (Assume this device has an IP of 10.115.210.2)
+mkfifo netpipe
+cat netpipe | nc 10.115.210.1 9500 -q 0 | unshare -n -r ./connect_executable_to_pipe.sh linphone 192.168.1.26/24 > netpipe
+```
+
+Now, the device with the IP address **10.115.210.1** can call the device
+with the IP address **10.115.210.2** at **192.168.1.26**. The device
+with the IP address **10.115.210.2** can call the device with the IP
+address **10.115.210.1** at **192.168.1.36**.
+
+#### Connecting two VoIP devices together (encrypted)
+
+```bash
+# (Assume this device has an IP of 10.115.210.1)
+cd Linphone_Example/Machine_B
+cp ../../connect_executable_to_pipe.sh .
+cp ../../outbound_gatekeeper.py .
+cp ../../inbound_gatekeeper.py .
+cp ../../SocatAdapter3.py .
+mkfifo netpipe
+cat netpipe | nc -l -p 9500 -q 0 | python3 inbound_gatekeeper.py | unshare -n -r ./connect_executable_to_pipe.sh linphone 192.168.1.2/24 | python3 outbound_gatekeeper.py > netpipe
+```
+
+```bash
+# (Assume this device has an IP of 10.115.210.2)
+cd Linphone_Example/Machine_A
+cp ../../connect_executable_to_pipe.sh .
+cp ../../outbound_gatekeeper.py .
+cp ../../inbound_gatekeeper.py .
+cp ../../SocatAdapter3.py .
+mkfifo netpipe
+cat netpipe | nc 10.115.210.1 9500 -q 0 | python3 inbound_gatekeeper.py | unshare -n -r ./connect_executable_to_pipe.sh linphone 192.168.1.1/24 | python3 outbound_gatekeeper.py > netpipe
+```
+
+The device with the IP address **10.115.210.1** can make encrypted calls
+to the device **10.115.210.2** at **192.168.1.1**. The device with the
+IP address **10.115.210.2** can make encrypted calls to the device
+**10.115.210.1** at **192.168.1.2**.
