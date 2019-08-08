@@ -10,6 +10,8 @@ cp -v /opt/socialsdn/debugger_passthrough.py . || exit;
 cp -v /opt/socialsdn/create_container_config.py . || exit;
 cp -v /opt/socialsdn/transport_mechanisms.py . || exit;
 cp -v /opt/socialsdn/application_resolver.py . || exit;
+cp -v /opt/socialsdn/inbound_sidechannel_passthrough.py inbound_sidechannel_shaper.py || exit;
+cp -v /opt/socialsdn/outbound_sidechannel_passthrough.py outbound_sidechannel_shaper.py || exit;
 echo "...done."
 
 echo "Creating the named pipe..."

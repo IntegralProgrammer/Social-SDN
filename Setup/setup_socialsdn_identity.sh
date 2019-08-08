@@ -7,5 +7,5 @@ echo "...Done."
 echo ""
 
 echo "Generating an identity private/public keypair..."
-python3 create_identity_keypair.py
+python3 /opt/socialsdn/create_identity_keypair.py
 echo "...Done."

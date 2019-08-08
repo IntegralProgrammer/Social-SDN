@@ -3,11 +3,14 @@
 
 import sys
 import json
+#import time
 
 import umsgpack
 import nacl.secret
 from scapy.all import IP
 from SocatAdapter3 import SocatParser
+
+import outbound_sidechannel_shaper
 
 PUBLIC_KEY_FILE = "service_publickey.json"
 KEYMAPPINGS_FILE = "tx_keymappings.json"
@@ -63,7 +66,12 @@ while True:
 		outbound_msg.append(dst_publickey)
 		
 		#Use an appropriate nonce
-		outbound_payload = encryption_box.encrypt(bytes(ret), nonce=crypto_nonce.to_bytes(24, byteorder='big'))
+		#outbound_time_ms = int(time.time() * 1000).to_bytes(8, byteorder='big')
+		
+		#outbound_payload = encryption_box.encrypt(outbound_time_ms + bytes(ret), nonce=crypto_nonce.to_bytes(24, byteorder='big'))
+		outbound_payload = encryption_box.encrypt(outbound_sidechannel_shaper.process_packet(dst_publickey, bytes(ret)), nonce=crypto_nonce.to_bytes(24, byteorder='big'))
+		
+		
 		crypto_nonce += 1
 		localdb_crypto_nonces[dst_publickey] = crypto_nonce
 		

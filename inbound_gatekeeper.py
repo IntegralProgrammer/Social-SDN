@@ -3,12 +3,15 @@
 
 import sys
 import json
+#import time
 
 import umsgpack
 import nacl.secret
 import nacl.exceptions
 from scapy.all import IP, UDP, TCP
 from SocatAdapter3 import socat_format
+
+import inbound_sidechannel_shaper
 
 CONST_DST_IP_FILE = "dst_ip.json"
 KEYMAPPINGS_FILE = "rx_keymappings.json"
@@ -83,8 +86,16 @@ while True:
 	if sender not in localdb_ipmappings:
 		continue
 	
-	incoming_pkt = IP(decrypted_payload)
+	#incoming_time = int.from_bytes(decrypted_payload[0:8], byteorder='big')
+	
+	#incoming_pkt = IP(decrypted_payload[8:])
+	incoming_pkt = IP(inbound_sidechannel_shaper.process_packet(sender, decrypted_payload))
+	
 	incoming_pkt.src = localdb_ipmappings[sender]
+	
+	#Debug
+	#timediff = abs(incoming_time - int(time.time() * 1000))
+	#sys.stderr.write("Incoming packet delayed by {} ms.\n".format(timediff))
 	
 	#Assign the appropriate destination IP (this is a constant)
 	incoming_pkt.dst = CONST_DST_IP
