@@ -254,3 +254,12 @@ the *average*, *minimum*, and *maximum* packet delays of the last *250*
 IP packets, copy the file `inbound_sidechannel_timedebug.py` as
 `inbound_sidechannel_shaper.py` and `outbound_sidechannel_timedebug.py`
 as `outbound_sidechannel_shaper.py`.
+
+#### Connecting two VoIP devices together (encrypted, automated, side-channel protected)
+
+Copy the files `outbound_sidechannel_voipmodel.py` and
+`inbound_sidechannel_voipmodel.py` as `outbound_sidechannel_shaper.py`
+and `inbound_sidechannel_shaper.py`, respectively, into the working
+directories on both machines. Then start both pipelines by following the
+instructions given in the subsection **Connecting two VoIP devices
+together (encrypted, automated)**.
