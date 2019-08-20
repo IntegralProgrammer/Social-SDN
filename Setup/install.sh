@@ -15,6 +15,15 @@ cp -v ../transport_mechanisms.py /opt/socialsdn/
 cp -v ../application_resolver.py /opt/socialsdn/
 cp -v ../inbound_sidechannel_passthrough.py /opt/socialsdn/
 cp -v ../outbound_sidechannel_passthrough.py /opt/socialsdn/
+cp -v ../timeserver.py /opt/socialsdn/
+cp -v ../timeclient.py /opt/socialsdn/
+
+cp -v ../act_timeserver.sh /opt/socialsdn/
+chmod +x /opt/socialsdn/act_timeserver.sh
+
+cp -v ../act_timeclient.sh /opt/socialsdn/
+chmod +x /opt/socialsdn/act_timeclient.sh
+
 cp -v create_identity_keypair.py /opt/socialsdn/
 
 cp -v ../initialize_socialsdn_directory.sh /usr/bin/

@@ -263,3 +263,22 @@ and `inbound_sidechannel_shaper.py`, respectively, into the working
 directories on both machines. Then start both pipelines by following the
 instructions given in the subsection **Connecting two VoIP devices
 together (encrypted, automated)**.
+
+### Time Synchronization
+
+For network data transport that must satisfy real-time constraints, the
+value (plus or minus three seconds) of the UNIX time on the remote host
+must be known on the local host. To obtain the delta in UTC clock
+readings between the local host and the remote host, run the following:
+
+On the remote host, run `test_create_initiator.py` connecting to the
+local host. Choose the value *192.168.1.1* for *IP address for this side*
+and *192.168.1.2* for *IP address for the remote side*. The *app name*
+should be *TIMESYNC*.
+
+On the local host, run `test_create_connector.py` and accept the request
+link from the remote host.
+
+After starting the network pipelines on both sides, the local host will
+record the time delta between its UNIX time and the remote host's UNIX
+time under `~/.socialsdn/timediffs/<peer ID of remote host>.json`.

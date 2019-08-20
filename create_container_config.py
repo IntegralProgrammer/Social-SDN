@@ -68,7 +68,7 @@ def create_connector_container_config(transport_mech, remote_peer_id, tx_symmetr
 	pipeline_list.append("python3 inbound_gatekeeper.py")
 	
 	#Resolve application name...see if it's allowed
-	resolved_app_name = resolveAppName(app_name)
+	resolved_app_name = resolveAppName(app_name, False)
 	
 	#...run the executable in a new network namespace
 	pipeline_list.append("unshare -n -r ./connect_executable_to_pipe.sh {} {}/24".format(resolved_app_name, this_ipaddr))
@@ -118,7 +118,7 @@ def create_initiator_container_config(transport_mech, remote_peer_id, tx_symmetr
 	pipeline_list.append("python3 inbound_gatekeeper.py")
 	
 	#Resolve application name...see if it's allowed
-	resolved_app_name = resolveAppName(app_name)
+	resolved_app_name = resolveAppName(app_name, True)
 	
 	#...run the executable in a new network namespace
 	pipeline_list.append("unshare -n -r ./connect_executable_to_pipe.sh {} {}/24".format(resolved_app_name, this_ipaddr))
