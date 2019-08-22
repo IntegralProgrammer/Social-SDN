@@ -3,11 +3,16 @@ Building a Software Defined Network (SDN) over social connections
 
 ## Dependencies
 
-Install the following Python packages
+Install the following Python packages:
 
 - PyNaCl
 - Scapy3k
 - u-msgpack-python
+
+For using the graphical user interface (GUI), install the following Python packages:
+
+- easygui
+- pyperclip
 
 Install the *SocatAdapter3* Python module
 
