@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
+import json
 import time
 import sys
 
@@ -8,6 +10,20 @@ packet_counter = 0
 cumulative_delay = 0.0
 min_delay = None
 max_delay = None
+
+HOMEDIR = os.environ['HOME']
+HOST_TIME_OFFSETS = {}
+
+#Populate HOST_TIME_OFFSETS
+offset_files = os.listdir(HOMEDIR + "/.socialsdn/timediffs/")
+for filename in offset_files:
+	if not filename.endswith('.json'):
+		continue
+	f = open(HOMEDIR + "/.socialsdn/timediffs/" + filename)
+	HOST_TIME_OFFSETS[bytes.fromhex(filename.rstrip('.json'))] = json.loads(f.read())
+	f.close()
+
+
 def process_packet(sender, plaintext_payload):
 	global packet_counter
 	global cumulative_delay
@@ -19,6 +35,12 @@ def process_packet(sender, plaintext_payload):
 	payload_length = int.from_bytes(plaintext_payload[8:10], byteorder='big')
 	actual_payload = plaintext_payload[10:10+payload_length]
 	
+	#Correct remote_time_ms for the given remote host
+	if sender not in HOST_TIME_OFFSETS:
+		raise Exception("Time offset information unknown.")
+	
+	host_offset = HOST_TIME_OFFSETS[sender]
+	remote_time_ms += host_offset
 	timediff = abs(now_time_ms - remote_time_ms)
 	
 	if min_delay is None:
