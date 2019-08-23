@@ -3,6 +3,7 @@
 echo "Creating the ~/.socialsdn configuration directory..."
 mkdir ~/.socialsdn
 mkdir ~/.socialsdn/timediffs
+mkdir ~/.socialsdn/contacts
 echo "...Done."
 
 echo ""

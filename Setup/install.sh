@@ -17,6 +17,9 @@ cp -v ../inbound_sidechannel_passthrough.py /opt/socialsdn/
 cp -v ../outbound_sidechannel_passthrough.py /opt/socialsdn/
 cp -v ../timeserver.py /opt/socialsdn/
 cp -v ../timeclient.py /opt/socialsdn/
+cp -v ../gui_create_initiator.py /opt/socialsdn/
+cp -v ../gui_create_connector.py /opt/socialsdn/
+cp -v ../add_contact.py /opt/socialsdn/
 
 cp -v ../act_timeserver.sh /opt/socialsdn/
 chmod +x /opt/socialsdn/act_timeserver.sh

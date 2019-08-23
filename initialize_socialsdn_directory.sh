@@ -16,6 +16,8 @@ cp -v /opt/socialsdn/timeserver.py . || exit;
 cp -v /opt/socialsdn/timeclient.py . || exit;
 cp -v /opt/socialsdn/act_timeserver.sh . || exit;
 cp -v /opt/socialsdn/act_timeclient.sh . || exit;
+cp -v /opt/socialsdn/gui_create_initiator.py . || exit;
+cp -v /opt/socialsdn/gui_create_connector.py . || exit;
 echo "...done."
 
 echo "Creating the named pipe..."

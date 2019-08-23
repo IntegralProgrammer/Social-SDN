@@ -1,19 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
+import json
 import time
 import easygui
 
 from create_container_config import get_verified_connector_container_config, create_connector_container_config
 
+HOMEDIR = os.environ['HOME']
+
 req_link = easygui.enterbox("Enter the request link:", "SocialSDN")
 sender = req_link[0:64]
 req = req_link[64:]
 
+key_lookup = {}
+contacts_files = os.listdir(HOMEDIR + "/.socialsdn/contacts/")
+for filename in contacts_files:
+	if not filename.endswith(".json"):
+		continue
+	f = open(HOMEDIR + "/.socialsdn/contacts/" + filename)
+	userinfo = json.loads(f.read())
+	f.close()
+	key_lookup[userinfo['pubkey']] = userinfo['name']
+
+resolved_sender_name = "Unknown: {}".format(sender)
+if sender in key_lookup:
+	resolved_sender_name = "Contact: {}".format(key_lookup[sender])
+
 try:
 	connector_config = get_verified_connector_container_config(sender, req)
 	gui_msg = "\n\n"
-	gui_msg += "The remote peer {} would like to setup the following connection:\n".format(sender)
+	gui_msg += "The remote peer {} would like to setup the following connection:\n".format(resolved_sender_name)
 	nonce_time = int(req[0:48], 16)
 	gui_msg += "\tInitiation Time: {}\n".format(time.strftime("%B %d %Y - %H:%M:%S", time.localtime(nonce_time)))
 	gui_msg += "\tApplication: {}\n".format(connector_config['app_name'])
