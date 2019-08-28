@@ -1,0 +1,9 @@
+VoIP Model Traffic Shaping
+==========================
+
+- Measures the time difference (normalized according to ~/.socialsdn/timediffs/)
+and reports statistics on network delay.
+
+- Measures data rate of outbound network traffic to detect side-channel information leaks.
+
+- Pads outbound packets to be 1610 bytes in length, thus preventing side-channel information leakage.

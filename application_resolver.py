@@ -10,6 +10,12 @@ def resolveAppName(app_name, isInitiator):
 		else:
 			return "./act_timeclient.sh"
 	
+	if app_name == "Droopy-to-Firefox":
+		if isInitiator:
+			return "/opt/socialsdn/droopy_socialsdn_server.sh"
+		else:
+			return "/opt/socialsdn/firefox_socialsdn_client.sh"
+	
 	if app_name in ALLOWED_APPNAMES:
 		return app_name
 	else:

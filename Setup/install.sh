@@ -21,6 +21,26 @@ cp -v ../gui_create_initiator.py /opt/socialsdn/
 cp -v ../gui_create_connector.py /opt/socialsdn/
 cp -v ../add_contact.py /opt/socialsdn/
 
+cp -v ../firefox_socialsdn_client.sh /opt/socialsdn/
+chmod +x /opt/socialsdn/firefox_socialsdn_client.sh
+
+cp -v ../droopy_socialsdn_server.sh /opt/socialsdn/
+chmod +x /opt/socialsdn/droopy_socialsdn_server.sh
+
+mkdir /opt/socialsdn/trafficshaping
+mkdir /opt/socialsdn/trafficshaping/inbound
+mkdir /opt/socialsdn/trafficshaping/outbound
+mkdir /opt/socialsdn/trafficshaping/desc
+mkdir /opt/socialsdn/trafficshaping/names
+
+echo "Installing traffic shaping policies"
+SUM=$(cat ../TrafficShapingDescriptions/voip_model.txt ../inbound_sidechannel_voipmodel.py ../outbound_sidechannel_voipmodel.py | sha256sum - | cut -d ' ' -f1)
+cp -v ../inbound_sidechannel_voipmodel.py /opt/socialsdn/trafficshaping/inbound/$SUM.py
+cp -v ../outbound_sidechannel_voipmodel.py /opt/socialsdn/trafficshaping/outbound/$SUM.py
+cp -v ../TrafficShapingDescriptions/voip_model.txt /opt/socialsdn/trafficshaping/desc/$SUM.txt
+echo -ne "VoIP Model" > /opt/socialsdn/trafficshaping/names/$SUM.txt
+
+
 cp -v ../act_timeserver.sh /opt/socialsdn/
 chmod +x /opt/socialsdn/act_timeserver.sh
 

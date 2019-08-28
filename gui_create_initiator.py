@@ -16,7 +16,17 @@ from transport_mechanisms import transport_mechanisms
 HOMEDIR = os.environ['HOME']
 
 TRANSPORT_MECHS = ["netcat", "ngrok"]
-APP_LIST = ["TIMESYNC", "linphone"]
+APP_LIST = ["TIMESYNC", "linphone", "Droopy-to-Firefox"]
+
+#Populate the list of side-channel protectors
+protector_list = {}
+protector_files = os.listdir("/opt/socialsdn/trafficshaping/names/")
+for filename in protector_files:
+	f = open("/opt/socialsdn/trafficshaping/names/" + filename, 'r')
+	protector_name = f.read()
+	f.close()
+	protector_list[protector_name] = filename.rstrip(".txt")
+
 
 #Populate userlist
 userlist = {}
@@ -70,8 +80,15 @@ app_name = easygui.choicebox("Select app:", "SocialSDN", APP_LIST)
 if app_name is None:
 	sys.exit()
 
-#TODO: Configure setup of side-channel protectors
+#Configure setup of side-channel protectors
 sc_protectors = []
+layer_name_config = []
+while True:
+	protector_layer = easygui.choicebox("Protection Layers: {}. Add a traffic shaping layer? Press 'Cancel' to skip and continue.".format(layer_name_config), "SocialSDN", list(protector_list.keys()))
+	if protector_layer is None:
+		break
+	sc_protectors.append(protector_list[protector_layer])
+	layer_name_config.append(protector_layer)
 
 current_time = int(time.time())
 nacl_nonce = current_time.to_bytes(24, byteorder='big')

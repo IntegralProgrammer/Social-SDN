@@ -3,6 +3,7 @@
 
 import os
 import json
+from shutil import copyfile
 
 import nacl.public
 
@@ -78,6 +79,16 @@ def create_connector_container_config(transport_mech, remote_peer_id, tx_symmetr
 	
 	#Save
 	pipeline_script_write(pipeline_list, "run_pipeline.sh")
+	
+	#For now, only use the 0th shaper in the list of shapers
+	if len(sc_protectors) > 0:
+		chosen_prot = str(sc_protectors[0])
+		for c in chosen_prot:
+			if c not in "0123456789abcdef":
+				raise Exception("Invalid specification for traffic shaper.")
+		
+		copyfile("/opt/socialsdn/trafficshaping/inbound/{}.py".format(chosen_prot), "inbound_sidechannel_shaper.py")
+		copyfile("/opt/socialsdn/trafficshaping/outbound/{}.py".format(chosen_prot), "outbound_sidechannel_shaper.py")
 
 
 def create_initiator_container_config(transport_mech, remote_peer_id, tx_symmetric_key, rx_symmetric_key, this_ipaddr, remote_ipaddr, app_name, sc_protectors):
@@ -128,6 +139,12 @@ def create_initiator_container_config(transport_mech, remote_peer_id, tx_symmetr
 	
 	#Save
 	pipeline_script_write(pipeline_list, "run_pipeline.sh")
+	
+	#For now, only use the 0th shaper in the list of shapers
+	if len(sc_protectors) > 0:
+		chosen_prot = str(sc_protectors[0])
+		copyfile("/opt/socialsdn/trafficshaping/inbound/{}.py".format(chosen_prot), "inbound_sidechannel_shaper.py")
+		copyfile("/opt/socialsdn/trafficshaping/outbound/{}.py".format(chosen_prot), "outbound_sidechannel_shaper.py")
 	
 	#Return the necessary parameter for the connector to connect to this initiator
 	connect_params = {}
