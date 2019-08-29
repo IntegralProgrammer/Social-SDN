@@ -19,7 +19,11 @@ cp -v ../timeserver.py /opt/socialsdn/
 cp -v ../timeclient.py /opt/socialsdn/
 cp -v ../gui_create_initiator.py /opt/socialsdn/
 cp -v ../gui_create_connector.py /opt/socialsdn/
+cp -v ../gui_pipeline_manager.py /opt/socialsdn/
 cp -v ../add_contact.py /opt/socialsdn/
+
+cp -v ../run_pipeline.sh /opt/socialsdn/
+chmod 555 /opt/socialsdn/run_pipeline.sh
 
 cp -v ../firefox_socialsdn_client.sh /opt/socialsdn/
 chmod +x /opt/socialsdn/firefox_socialsdn_client.sh

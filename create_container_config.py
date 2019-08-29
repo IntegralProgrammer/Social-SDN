@@ -25,7 +25,11 @@ def json_write(obj, fname):
 
 def pipeline_script_write(plist, fname):
 	f = open(fname, 'w')
+	f.write("#!/bin/bash\n")
+	f.write("(")
 	f.write(" | ".join(plist))
+	f.write(") &\n")
+	f.write("exec python3 gui_pipeline_manager.py\n")
 	f.close()
 	
 	#Only this user should be able to READ and EXECUTE
@@ -78,7 +82,7 @@ def create_connector_container_config(transport_mech, remote_peer_id, tx_symmetr
 	pipeline_list.append("python3 outbound_gatekeeper.py > netpipe")
 	
 	#Save
-	pipeline_script_write(pipeline_list, "run_pipeline.sh")
+	pipeline_script_write(pipeline_list, "inner_run_pipeline.sh")
 	
 	#For now, only use the 0th shaper in the list of shapers
 	if len(sc_protectors) > 0:
@@ -138,7 +142,7 @@ def create_initiator_container_config(transport_mech, remote_peer_id, tx_symmetr
 	pipeline_list.append("python3 outbound_gatekeeper.py > netpipe")
 	
 	#Save
-	pipeline_script_write(pipeline_list, "run_pipeline.sh")
+	pipeline_script_write(pipeline_list, "inner_run_pipeline.sh")
 	
 	#For now, only use the 0th shaper in the list of shapers
 	if len(sc_protectors) > 0:

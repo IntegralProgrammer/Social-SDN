@@ -18,6 +18,8 @@ cp -v /opt/socialsdn/act_timeserver.sh . || exit;
 cp -v /opt/socialsdn/act_timeclient.sh . || exit;
 cp -v /opt/socialsdn/gui_create_initiator.py . || exit;
 cp -v /opt/socialsdn/gui_create_connector.py . || exit;
+cp -v /opt/socialsdn/gui_pipeline_manager.py . || exit;
+cp -v /opt/socialsdn/run_pipeline.sh . || exit;
 echo "...done."
 
 echo "Creating the named pipe..."
