@@ -13,6 +13,7 @@ For using the graphical user interface (GUI), install the following Python packa
 
 - easygui
 - pyperclip
+- zenity
 
 Install the *SocatAdapter3* Python module
 

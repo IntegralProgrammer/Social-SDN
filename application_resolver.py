@@ -16,6 +16,12 @@ def resolveAppName(app_name, isInitiator):
 		else:
 			return "/opt/socialsdn/firefox_socialsdn_client.sh"
 	
+	if app_name == "UNIXsocket-to-Firefox":
+		if isInitiator:
+			return "gui_tcp_to_unix.sh"
+		else:
+			return "/opt/socialsdn/firefox_socialsdn_client.sh"
+	
 	if app_name in ALLOWED_APPNAMES:
 		return app_name
 	else:

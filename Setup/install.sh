@@ -31,6 +31,12 @@ chmod +x /opt/socialsdn/firefox_socialsdn_client.sh
 cp -v ../droopy_socialsdn_server.sh /opt/socialsdn/
 chmod +x /opt/socialsdn/droopy_socialsdn_server.sh
 
+cp -v ../gui_tcp_to_unix.sh /usr/bin/
+chmod +x /usr/bin/gui_tcp_to_unix.sh
+
+cp -v ../gui_unix_to_tcp.sh /usr/bin/
+chmod +x /usr/bin/gui_unix_to_tcp.sh
+
 mkdir /opt/socialsdn/trafficshaping
 mkdir /opt/socialsdn/trafficshaping/inbound
 mkdir /opt/socialsdn/trafficshaping/outbound

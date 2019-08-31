@@ -16,7 +16,7 @@ from transport_mechanisms import transport_mechanisms
 HOMEDIR = os.environ['HOME']
 
 TRANSPORT_MECHS = ["netcat", "ngrok"]
-APP_LIST = ["TIMESYNC", "linphone", "Droopy-to-Firefox"]
+APP_LIST = ["TIMESYNC", "linphone", "Droopy-to-Firefox", "UNIXsocket-to-Firefox"]
 
 #Populate the list of side-channel protectors
 protector_list = {}
