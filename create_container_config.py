@@ -32,8 +32,8 @@ def pipeline_script_write(plist, fname):
 	f.write("exec python3 gui_pipeline_manager.py\n")
 	f.close()
 	
-	#Only this user should be able to READ and EXECUTE
-	os.chmod(fname, 320)
+	#Only this user should be able to READ, WRITE, and EXECUTE
+	os.chmod(fname, 700)
 
 def create_connector_container_config(transport_mech, remote_peer_id, tx_symmetric_key, rx_symmetric_key, this_ipaddr, remote_ipaddr, app_name, sc_protectors):
 	#Create the dst_ip.json file
